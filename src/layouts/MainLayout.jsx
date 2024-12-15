@@ -1,11 +1,9 @@
 import Navbar from "../components/Navbar";
-import Watchlist from "../components/home/Watchlist";
 function MainLayout({ children }) {
   return (
-    <div className="bg-darkGray">
+    <div className="bg-darkGray min-h-screen">
       <Navbar />
-      <Watchlist/>
-      <div className="mt-4">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }

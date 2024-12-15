@@ -12,7 +12,7 @@ const homeSlice = createSlice({
   reducers: {
     add: (state, action) => {
       state.watched.push(action.payload);
-    },
+    },    
     remove: (state, action) => {
       state.watched = state.watched.filter(
         (crypto) => crypto.id !== action.payload

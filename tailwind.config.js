@@ -18,7 +18,10 @@ export default {
         lightBlue: '#87CEEB',
         darkGray: '#14161A',
       },
+      boxShadow: {
+        'custom-1': '0px 4px 5px 0px #00000024',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography'),require('daisyui')],
 };
