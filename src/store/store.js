@@ -4,8 +4,4 @@ export const store = configureStore({
   reducer: {
     home: homeSlice,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
 });
