@@ -11,8 +11,11 @@ const homeSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      state.watched.push(action.payload);
-    },    
+      const exists = state.watched.find((item) => item.id === action.payload.id);
+      if (!exists) {
+        state.watched.push(action.payload);
+      }
+    },
     remove: (state, action) => {
       state.watched = state.watched.filter(
         (crypto) => crypto.id !== action.payload
