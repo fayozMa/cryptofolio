@@ -1,0 +1,46 @@
+.pagination {
+  justify-content: center;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.page-item .page-link {
+  position: relative;
+  display: block;
+  margin: 0 14px;
+  min-height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  color: #87CEEB;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+/* Removed hover effect */
+.page-item a.page-link:hover {
+  background-color: transparent;
+}
+
+.page-item.active .page-link {
+  font-weight: 700;
+  color: #87CEEB;
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+}
+
+.page-item.prev .page-link,
+.page-item.next .page-link,
+.page-item.ellipsis .page-link {
+  color: #87CEEB;
+  background-color: transparent;
+}
