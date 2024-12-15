@@ -36,7 +36,7 @@ function Hero() {
   }, [data, currency]);
 
   return (
-    <div className="bg-[url('./hero_bg.png')]">
+    <div className="bg-[url('/hero_bg.png')]">
       <div className="container mx-auto">
         <div className="pt-8 pb-6 mb-4">
           <h1 className="font-bold text-6xl leading-[72px] text-center text-lightBlue mt-4 font-montserrat">
