@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { toggle } from "../../store/homeSlice";
 function Watchlist() {
   const visible = useSelector((state) => state.home.visible);
   const dispatch = useDispatch();

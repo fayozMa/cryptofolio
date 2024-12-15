@@ -45,8 +45,8 @@ function Home() {
     setSearchParams({ page });
   };
 
-  const handleList = (image,price,id) => {
-    dispatch(add({image,price}));
+  const handleList = (image, price, id) => {
+    dispatch(add({ image, price, id }));
     navigate(`details/${id}`);
   };
 
@@ -80,7 +80,9 @@ function Home() {
                 <tr
                   key={crypto.id}
                   className="border-b border-gray-600 bg-[#16171A]"
-                  onClick={() => handleList(crypto.image,crypto.current_price,crypto.id)}
+                  onClick={() =>
+                    handleList(crypto.image, crypto.current_price, crypto.id)
+                  }
                 >
                   <td className="px-4 py-2 flex items-center gap-4">
                     <img
@@ -99,12 +101,18 @@ function Home() {
                       : currency === "EUR"
                       ? "€ "
                       : "₹ "}
-                    {crypto.current_price.toLocaleString(currency === "USD" ? "en-US" : currency === "EUR" ? "de-DE" : "en-IN")}
+                    {crypto.current_price.toLocaleString(
+                      currency === "USD"
+                        ? "en-US"
+                        : currency === "EUR"
+                        ? "de-DE"
+                        : "en-IN"
+                    )}
                   </td>
                   <td className="flex items-center justify-end">
                     <img
                       src={
-                        watched.includes(crypto.id)
+                        watched.some((item) => item.id === crypto.id)
                           ? "../eye_green.svg"
                           : "../eye.svg"
                       }
@@ -129,7 +137,14 @@ function Home() {
                       : currency === "EUR"
                       ? "€ "
                       : "₹ "}
-                    {crypto.market_cap.toLocaleString(currency === "USD" ? "en-US" : currency === "EUR" ? "de-DE" : "en-IN")}M
+                    {crypto.market_cap.toLocaleString(
+                      currency === "USD"
+                        ? "en-US"
+                        : currency === "EUR"
+                        ? "de-DE"
+                        : "en-IN"
+                    )}
+                    M
                   </td>
                 </tr>
               ))}
