@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Hero from "../components/home/Hero";
 import ResponsivePaginationComponent from "react-responsive-pagination";
 import "../css/pagination.css";
-import { add, toggle, remove } from "../store/homeSlice";
-import Watchlist from "../components/Watchlist";
+import { add } from "../store/homeSlice";
 
 function Home() {
   const [data, setData] = useState(null);
@@ -14,9 +13,10 @@ function Home() {
     Number(searchParams.get("page") || 1)
   );
   const [isError, setIsError] = useState(false);
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
   const currency = useSelector((state) => state.home.currency);
   const watched = useSelector((state) => state.home.watched);
-  const visible = useSelector((state) => state.home.visible);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,6 +45,21 @@ function Home() {
     localStorage.setItem("watched", JSON.stringify(watched));
   }, [watched]);
 
+  useEffect(() => {
+    if (search && data && !search.trim() == "") {
+      const searching = search.toLowerCase();
+      const filtered = data.filter(
+        (crypto) =>
+          crypto.id.toLowerCase().includes(searching) ||
+          crypto.name.toLowerCase().includes(searching) ||
+          crypto.symbol.toLowerCase().includes(searching)
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [search, data]);
+
   const handleChangePagination = (page) => {
     setCurrentPage(page);
     setSearchParams({ page });
@@ -56,7 +71,6 @@ function Home() {
     }
     navigate(`details/${id}`);
   };
-
   return (
     <div>
       <Hero />
@@ -64,11 +78,15 @@ function Home() {
         <h2 className="text-center font-montserrat text-4xl leading-10 text-white mt-5">
           Cryptocurrency Prices by Market Cap
         </h2>
-        <input
-          type="text"
-          placeholder="Search For a Crypto Currency.."
-          className="input bg-transparent input-bordered w-full mt-3 mb-5"
-        />
+        <form method="post">
+          <input
+            type="text"
+            placeholder="Search For a Crypto Currency.."
+            className="input bg-transparent input-bordered w-full mt-3 mb-5"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </form>
         <table className="table-auto w-full text-left border-collapse text-sm mt-5">
           <thead className="bg-lightBlue text-black py-5 px-4 rounded">
             <tr>
@@ -87,8 +105,8 @@ function Home() {
             </tr>
           </thead>
           <tbody className="bg-dark-gray text-white">
-            {data &&
-              data.map((crypto) => (
+            {filteredData &&
+              filteredData.map((crypto) => (
                 <tr
                   key={crypto.id}
                   className="border-b border-gray-600 bg-[#16171A]"
