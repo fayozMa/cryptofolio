@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   watched: [],
   currency: "USD",
-  visible:false
+  visible:false,
+  time:"Hour"
 };
 
 const homeSlice = createSlice({
@@ -26,10 +27,13 @@ const homeSlice = createSlice({
     },
     toggle: (state,action) => {
       state.visible = action.payload
+    },
+    timeControl: (state,action) => {
+      state.time = action.payload
     }
   },
 });
 
-export const { add, remove, change,toggle } = homeSlice.actions;
+export const { add, remove, change,toggle, timeControl } = homeSlice.actions;
 
 export default homeSlice.reducer;

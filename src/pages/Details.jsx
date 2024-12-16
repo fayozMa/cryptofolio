@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Chart from "../components/details/Chart";
 import DOMPurify from "dompurify";
+import Control from "../components/details/Control";
 function Details() {
   const [data, setData] = useState(null);
   const currency = useSelector((state) => state.home.currency);
-  const currency_lower = currency?.toLowerCase()
+  const currency_lower = currency?.toLowerCase();
   const { id } = useParams();
+  const nums = [
+    3.45245, 5.6789, 2.34567, 9.87654, 1.23456, 4.56789, 6.78901, 0.12345,
+    8.34567, 7.89012,
+  ];
 
   useEffect(() => {
     fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
+        console.log(
+          data.market_data.price_change_percentage_24h_in_currency[
+            currency_lower
+          ]
+        );
       })
       .catch((error) => console.error(error));
   }, []);
@@ -20,7 +31,7 @@ function Details() {
   return (
     <div>
       {data && (
-        <div className="flex items-center justify-between mt-6">
+        <div className="flex justify-between mt-6">
           <div className="px-6 max-w-[547px] border-r-2 border-gray-600">
             <div className="flex flex-col items-center">
               <img
@@ -49,7 +60,9 @@ function Details() {
                 Current Price:{" "}
                 <span className="font-normal">
                   {currency === "USD" ? "$ " : currency === "EUR" ? "€ " : "₹ "}
-                  {data.market_data.current_price[currency_lower].toLocaleString(
+                  {data.market_data.current_price[
+                    currency_lower
+                  ].toLocaleString(
                     currency === "USD"
                       ? "en-US"
                       : currency === "EUR"
@@ -73,7 +86,10 @@ function Details() {
               </p>
             </div>
           </div>
-          <div></div>
+          <div className="flex flex-col items-center gap-5 pr-6 mt-16">
+            <Chart data={nums} />
+            <Control />
+          </div>
         </div>
       )}
     </div>

@@ -1,15 +1,25 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggle, remove } from "../store/homeSlice";
+import { toggle, remove, add } from "../store/homeSlice";
+import { useEffect } from "react";
 
 const Watchlist = () => {
   const watched = useSelector((state) => state.home.watched);
   const currency = useSelector((state) => state.home.currency);
-  const visible = useSelector((state) => state.home.visible)
+  const visible = useSelector((state) => state.home.visible);
   const dispatch = useDispatch();
 
-  if (!visible) return null;
+  useEffect(() => {
+    const fromStorage = JSON.parse(localStorage.getItem("watched"));
+    if (fromStorage) {
+      fromStorage.forEach((item) => dispatch(add(item)));
+    }
+  }, [dispatch]);
 
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
+
+  if (!visible) return null;
   return (
     <div className="fixed top-0 right-0 h-full w-80 bg-[#515151] text-white px-4 shadow-lg">
       <div className="flex items-center justify-between mb-10 mt-8">

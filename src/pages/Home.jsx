@@ -35,17 +35,6 @@ function Home() {
   }, [currentPage, currency]);
 
   useEffect(() => {
-    const fromStorage = JSON.parse(localStorage.getItem("watched"));
-    if (fromStorage) {
-      fromStorage.forEach((item) => dispatch(add(item)));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
-
-  useEffect(() => {
     if (search && data && !search.trim() == "") {
       const searching = search.toLowerCase();
       const filtered = data.filter(
@@ -59,6 +48,8 @@ function Home() {
       setFilteredData(data);
     }
   }, [search, data]);
+
+
 
   const handleChangePagination = (page) => {
     setCurrentPage(page);
